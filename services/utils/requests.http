@@ -1,4 +1,4 @@
-@url = https://ei9ptrq2fa.execute-api.us-east-1.amazonaws.com/prod/
+@url = https://g70fwxsil9.execute-api.us-east-1.amazonaws.com/prod/
 
 POST {{url}}login HTTP/1.1
 Content-Type: application/json
