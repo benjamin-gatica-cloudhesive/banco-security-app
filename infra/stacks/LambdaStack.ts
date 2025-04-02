@@ -12,21 +12,22 @@ interface LambdaStackProps extends StackProps {
 }
 
 export class LambdaStack extends Stack {
-  public readonly loginIntegration: LambdaIntegration
+  public readonly initLoginIntegration: LambdaIntegration
+  public readonly resolveMFAIntegracion: LambdaIntegration
 
   constructor(scope: Construct, id: string, props: LambdaStackProps) {
     super(scope, id, props)
 
-    const login = new NodejsFunction(this, 'Login', {
+    const initLogin = new NodejsFunction(this, 'initLogin', {
       runtime: Runtime.NODEJS_22_X,
       handler: 'handler',
-      entry: (join(__dirname, '..','..', 'services', 'lambdas', 'auth', 'handler.ts')),
+      entry: (join(__dirname, '..','..', 'services', 'lambdas', 'auth', 'initLogIn.ts')),
       environment: {
         USER_POOL_CLIENT_ID: props.userPoolClientId
       },
     })
 
-    login.addToRolePolicy(new PolicyStatement({
+    initLogin.addToRolePolicy(new PolicyStatement({
       actions: [
         'cognito-idp:AdminInitiateAuth'
       ],
@@ -35,6 +36,26 @@ export class LambdaStack extends Stack {
       ],
     }));
 
-    this.loginIntegration = new LambdaIntegration(login)
+    this.initLoginIntegration = new LambdaIntegration(initLogin)
+
+    const resolveMFA = new NodejsFunction(this, 'resolveMFA', {
+      runtime: Runtime.NODEJS_22_X,
+      handler: 'handler',
+      entry: (join(__dirname, '..','..', 'services', 'lambdas', 'auth', 'manageMFA.ts')),
+      environment: {
+        USER_POOL_CLIENT_ID: props.userPoolClientId
+      },
+    })
+
+    resolveMFA.addToRolePolicy(new PolicyStatement({
+      actions: [
+        'cognito-idp:AdminInitiateAuth'
+      ],
+      resources: [
+        `arn:aws:cognito-idp:${this.region}:${this.account}:userpool/${props.userPoolId}`
+      ],
+    }));
+
+    this.resolveMFAIntegracion = new LambdaIntegration(resolveMFA)
   }
 }

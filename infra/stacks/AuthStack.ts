@@ -19,9 +19,6 @@ export class AuthStack extends Stack {
 
     this.createUserPool();
     this.createUserPoolClient();
-    this.createUserPoolDomain();
-    this.updateDomainLoginType();
-    this.createDomainStyle();
   }
 
   private createUserPool() {

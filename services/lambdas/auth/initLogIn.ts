@@ -1,4 +1,4 @@
-import { getToken, logIn } from "../../utils/cognitoUtils";
+import { initLogInFlow } from "../../utils/cognitoUtils";
 import { errorResponse, formattedResponse, getBodyFromEvent, validateStructureLoginCredentials } from "../../utils/utils";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 
@@ -10,16 +10,16 @@ async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResu
 
     const { userName, password } = credentials
 
-    const logInResponse = await logIn({ userName, password })
-
-    const token = getToken(logInResponse)
+    const logInResponse = await initLogInFlow({ userName, password })
 
     return formattedResponse(200, {
-      message: 'Token obtained successfully',
-      info: token
+      message: 'MFA needed',
+      info: {
+        Session: logInResponse.Session
+      }
     })
   } catch (error) {
-    return errorResponse(error, 'Error trying to make logIn')
+    return errorResponse(error, 'Error trying to init Log In')
   }
 }
 

@@ -1,9 +1,19 @@
-@url = https://g70fwxsil9.execute-api.us-east-1.amazonaws.com/prod/
+@url = https://ojhpqlg125.execute-api.us-east-1.amazonaws.com/prod/
 
-POST {{url}}login HTTP/1.1
+POST {{url}}initLogin HTTP/1.1
 Content-Type: application/json
 
 {
-  "userName": "pedrito",
+  "userName": "cognito.test@yopmail.com",
   "password": "Qwerty1234."
+}
+
+###
+POST {{url}}resolveMFA HTTP/1.1
+Content-Type: application/json
+
+{
+  "userName": "cognito.test@yopmail.com",
+  "mfaCode": "102971",
+  "session": "AYABeDl-acswa9hqEEpTRsMnVQwAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb2xzAAEAB2F3cy1rbXMAS2Fybjphd3M6a21zOnVzLWVhc3QtMTo3NDU2MjM0Njc1NTU6a2V5L2IxNTVhZmNhLWJmMjktNGVlZC1hZmQ4LWE5ZTA5MzY1M2RiZQC4AQIBAHhR9E4zNbI1ofi3Y01_Ljgh2wK-ZaC__bKufjbgmejy4gG270vA4Wz5qhXrlS4_qYHHAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMt9pRXsxnrfDTtTiHAgEQgDvj2_WkAH6r1mG-tQbiCEylbYGbFFY40aFAw3aJyVJwpayu1wkX0b2i4lXdZreYNUfTewjAxdG4p_0dTAIAAAAADAAAEAAAAAAAAAAAAAAAAABHxcCsfpX6_FjqiV_ftcV5_____wAAAAEAAAAAAAAAAAAAAAEAAAEctvCfpP_H5FqPmAJubLQMs3GXhTAD2j_Yuyg66XjpaPt-PTOZhDcwFiag5Egdz3nLCb6soO1QIqeaBr2p6jk2tLQQQgMIiftOUYCVgju5jIP6jBdFwouWxhyMJYx1wEWUZb1FtqVKOJoaBJP3xxgxWVsjHrB8cvMBtPxAaF-f76gwKJrREI-I8oHoZL-fIDJhkzOssZ4w-eKsSzBkvSaolztC2KHsWM2Z9FfkJ835aDDQ1ElZcEo_PPDYxx9bXO-VpqnjApdrrkDjxzYDrKBx1xB6wqjAY6AbjPkeXUfeJkaHDVEwWibnQ5EPPdq2Fq9rGrcEOFlZ0nROan7XT5zNgPKkqcdsqJmPLD-YR7DG4alLZcfz5EGp61KEBxlMNz9zwMDz-_26tQbLT_uw"
 }

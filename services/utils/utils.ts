@@ -58,6 +58,32 @@ export const validateStructureLoginCredentials = (credentials: any) => {
   }
 }
 
+export const validateStructureMFACredentials = (credentials: any) => {
+  if (!credentials.userName) {
+    throw new Error('userName not received')
+  }
+
+  if (!credentials.session) {
+    throw new Error('session not received')
+  }
+
+  if (!credentials.mfaCode ) {
+    throw new Error('mfaCode  not received')
+  }
+
+  if (typeof credentials.userName !== 'string') {
+    throw new Error('userName must be type string')
+  }
+
+  if (typeof credentials.session !== 'string') {
+    throw new Error('session must be type string')
+  }
+
+  if (typeof credentials.mfaCode  !== 'string') {
+    throw new Error('mfaCode  must be type string')
+  }
+}
+
 export const isIdInParameters = (event: APIGatewayProxyEvent) => {
   if (!event.pathParameters) {
     return false

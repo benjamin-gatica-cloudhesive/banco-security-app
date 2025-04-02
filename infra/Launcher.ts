@@ -13,5 +13,6 @@ const lambdaStack = new LambdaStack(app, 'BancoSecurityLambdaStack', {
 })
 
 new ApiStack(app, 'BancoSecurityApiStack', {
-  loginIntegration: lambdaStack.loginIntegration
+  initLoginIntegration: lambdaStack.initLoginIntegration,
+  resolveMFAIntegracion: lambdaStack.resolveMFAIntegracion
 })

@@ -3,7 +3,8 @@ import { Cors, LambdaIntegration, ResourceOptions, RestApi } from "aws-cdk-lib/a
 import { Construct } from "constructs";
 
 interface ApiStackProps extends StackProps {
-  loginIntegration: LambdaIntegration
+  initLoginIntegration: LambdaIntegration
+  resolveMFAIntegracion: LambdaIntegration
 }
 
 export class ApiStack extends Stack {
@@ -19,7 +20,10 @@ export class ApiStack extends Stack {
       }
     }
     
-    const loginResource = api.root.addResource('login', optionsWithCors)
-    loginResource.addMethod('POST', props.loginIntegration)
+    const loginResource = api.root.addResource('initLogin', optionsWithCors)
+    loginResource.addMethod('POST', props.initLoginIntegration)
+
+    const resolveMFAResource = api.root.addResource('resolveMFA', optionsWithCors)
+    resolveMFAResource.addMethod('POST', props.resolveMFAIntegracion)
   }
 }
