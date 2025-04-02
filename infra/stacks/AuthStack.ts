@@ -75,10 +75,6 @@ export class AuthStack extends Stack {
     });
   }
 
-  /*
-   * Esta funcion se encarga de actualizar el login del dominio de cognito de
-   * HostedUI a Managed login
-   * */
   private updateDomainLoginType() {
     const changeManagedLogin = new customResources.AwsCustomResource(
       this,
@@ -93,7 +89,7 @@ export class AuthStack extends Stack {
             Domain: this.userPoolDomain.domainName,
           },
           physicalResourceId:
-            customResources.PhysicalResourceId.of("ChangeManagedLogin"),
+            customResources.PhysicalResourceId.of("BancoSecurityChangeManagedLogin"),
         },
         policy: customResources.AwsCustomResourcePolicy.fromSdkCalls({
           resources: customResources.AwsCustomResourcePolicy.ANY_RESOURCE,
@@ -103,9 +99,6 @@ export class AuthStack extends Stack {
     changeManagedLogin.node.addDependency(this.userPoolDomain);
   }
 
-  /*
-   * Funcion para crear el estilo del managed login
-   * */
   private createDomainStyle() {
     new CfnManagedLoginBranding(this, "BancoSecurityManagedbranding", {
       userPoolId: this.userPool.userPoolId,
