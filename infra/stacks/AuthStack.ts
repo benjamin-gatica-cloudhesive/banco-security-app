@@ -1,6 +1,6 @@
 import { CfnOutput, Stack, StackProps } from 'aws-cdk-lib'
 import { Construct } from 'constructs';
-import { UserPool, UserPoolClient } from 'aws-cdk-lib/aws-cognito';
+import { Mfa, UserPool, UserPoolClient } from 'aws-cdk-lib/aws-cognito';
 
 export class AuthStack extends Stack {
   public userPool: UserPool
@@ -17,8 +17,12 @@ export class AuthStack extends Stack {
     this.userPool = new UserPool(this, 'BancoSecurityUserPool', {
       selfSignUpEnabled: true,
       signInAliases: {
-        username: true,
         email: true
+      },
+      mfa: Mfa.REQUIRED,
+      mfaSecondFactor: {
+        otp: true,
+        sms: false
       }
     })
 
