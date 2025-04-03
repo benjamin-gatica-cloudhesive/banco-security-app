@@ -33,7 +33,7 @@ export class AuthStack extends Stack {
       mfa: Mfa.REQUIRED,
       mfaSecondFactor: {
         otp: true,
-        sms: false,
+        sms: true,
       },
     });
 
@@ -88,8 +88,9 @@ export class AuthStack extends Stack {
             ManagedLoginVersion: 2,
             Domain: this.userPoolDomain.domainName,
           },
-          physicalResourceId:
-            customResources.PhysicalResourceId.of("BancoSecurityChangeManagedLogin"),
+          physicalResourceId: customResources.PhysicalResourceId.of(
+            "BancoSecurityChangeManagedLogin",
+          ),
         },
         policy: customResources.AwsCustomResourcePolicy.fromSdkCalls({
           resources: customResources.AwsCustomResourcePolicy.ANY_RESOURCE,
